@@ -21,8 +21,11 @@ class Post(Base):
     __tablename__ = 'posts'
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    body = Column(String)
+    # Set up the engine and session
+    engine = create_engine(DATABASE_URL)
+    SessionLocal = sessionmaker(bind=engine)
 
-# Set up the engine and session
+    # Create tables in the database
+    Base.metadata.create_all(engine)
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
