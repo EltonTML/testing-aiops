@@ -3,12 +3,14 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Example credentials for PostgreSQL (can switch to SQLite if preferred)
-DB_USER = 'your_db_user'
-DB_PASS = 'your_db_password'
-DB_HOST = 'localhost'
-DB_PORT = '5432'
-DB_NAME = 'testdb'
+# Get database credentials from environment variables
+import os
+
+DB_USER = os.environ.get('DB_USER', 'your_db_user')
+DB_PASS = os.environ.get('DB_PASS', 'your_db_password')
+DB_HOST = os.environ.get('DB_HOST', 'localhost')
+DB_PORT = os.environ.get('DB_PORT', '5432')
+DB_NAME = os.environ.get('DB_NAME', 'testdb')
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 # For SQLite instead: DATABASE_URL = "sqlite:///posts.db"
