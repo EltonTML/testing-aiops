@@ -1,7 +1,7 @@
 # main.py
 import requests
 
-def fetch_posts():
+def fetch_posts(): 
     url = "https://jsonplaceholder.typicode.com/posts"
     try:
         response = requests.get(url)
