@@ -15,12 +15,17 @@ def fetch_posts():
 def save_posts_to_db(posts):
     Base.metadata.create_all(bind=engine)
     session = SessionLocal()
-    for post_data in posts:
-        post = Post(id=post_data['id'], title=post_data['title'], body=post_data['body'])
-        session.merge(post)  # merge avoids duplicates on re-run
-    session.commit()
-    session.close()
-    print("Posts saved to SQLite database.")
+    try:
+        for post_data in posts:
+            post = Post(id=post_data['id'], title=post_data['title'], body=post_data['body'])
+            session.merge(post)  # merge avoids duplicates on re-run
+        session.commit()
+        print("Posts saved to SQLite database.")
+    except Exception as e:
+        session.rollback()
+        print(f"Error saving posts to database: {e}")
+    finally:
+        session.close()
 
 if __name__ == "__main__":
     posts = fetch_posts()
